@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Исследование рынка массажа — Yoga Space</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #f7f5f0; color: #2c2c2a; font-size: 14px; line-height: 1.6; }
+
+  .page { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  h1 { font-size: 26px; font-weight: 600; margin-bottom: 6px; color: #1a1a18; }
+  .subtitle { font-size: 14px; color: #888; margin-bottom: 40px; }
+
+  h2 { font-size: 16px; font-weight: 600; color: #1a1a18; margin-bottom: 16px; }
+  h3 { font-size: 14px; font-weight: 600; color: #1a1a18; margin-bottom: 10px; }
+
+  .section { margin-bottom: 48px; }
+
+  .section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: #888; margin-bottom: 14px;
+  }
+
+  /* NAV */
+  .nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+  .nav a {
+    font-size: 13px; color: #5C6937; text-decoration: none;
+    background: #eef1e6; padding: 5px 14px; border-radius: 20px;
+    border: 1px solid #d4dcc0; transition: background 0.15s;
+  }
+  .nav a:hover { background: #d4dcc0; }
+
+  /* CARDS GRID */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+  .card {
+    background: #fff; border: 1px solid #e8e4dc; border-radius: 12px;
+    padding: 16px 18px;
+  }
+  .card-tag {
+    font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px;
+    display: inline-block; margin-bottom: 10px;
+  }
+  .tag-sport { background: #deeaf5; color: #1a5276; }
+  .tag-luxury { background: #ede0f5; color: #5b2c6f; }
+  .tag-mass { background: #d5f5e3; color: #1e6b3c; }
+  .tag-niche { background: #fef9e7; color: #7d6608; border: 1px solid #f7dc6f; }
+  .tag-yoga { background: #eef1e6; color: #3a5a1c; }
+  .tag-ys { background: #fff0e8; color: #a04000; border: 1px solid #f0803b; }
+
+  .card-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .card-utp { font-size: 13px; color: #555; margin-bottom: 10px; line-height: 1.5; }
+  .card-price { font-size: 12px; color: #888; }
+  .card-price strong { color: #2c2c2a; }
+
+  /* PRICE TABLE */
+  .price-wrap { overflow-x: auto; }
+  table.price-table {
+    width: 100%; border-collapse: collapse; font-size: 13px;
+    background: #fff; border-radius: 12px; overflow: hidden;
+    border: 1px solid #e8e4dc;
+  }
+  .price-table th {
+    background: #f2f0ea; text-align: left; padding: 10px 14px;
+    font-weight: 600; font-size: 12px; color: #555;
+    border-bottom: 1px solid #e8e4dc;
+  }
+  .price-table th.studio-col { color: #1a1a18; }
+  .price-table td { padding: 10px 14px; border-bottom: 1px solid #f0ede6; color: #2c2c2a; vertical-align: top; }
+  .price-table tr:last-child td { border-bottom: none; }
+  .price-table tr:hover td { background: #faf9f6; }
+  .price-table td.studio-name { font-weight: 600; white-space: nowrap; }
+  .price-note { font-size: 11px; color: #aaa; margin-top: 2px; }
+  .price-ys { background: #fff8f4 !important; }
+  .price-ys td { color: #a04000; }
+
+  /* COMPETITOR REVIEWS */
+  .review-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+  .review-card {
+    background: #fff; border: 1px solid #e8e4dc; border-radius: 12px;
+    padding: 20px 22px;
+  }
+  .review-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+  .review-name { font-size: 16px; font-weight: 600; }
+  .review-link { font-size: 12px; color: #5C6937; text-decoration: none; }
+  .review-link:hover { text-decoration: underline; }
+  .review-concept { font-size: 13px; color: #555; margin-bottom: 16px; font-style: italic; }
+
+  .review-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+  .review-block { }
+  .review-block-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 8px; color: #888;
+  }
+  .review-block ul { list-style: none; }
+  .review-block ul li { font-size: 13px; padding: 4px 0; border-bottom: 1px solid #f0ede6; color: #2c2c2a; line-height: 1.4; }
+  .review-block ul li:last-child { border-bottom: none; }
+
+  .not-ok li::before { content: '✕  '; color: #c0392b; font-size: 11px; }
+  .ok li::before { content: '✓  '; color: #1e6b3c; font-size: 11px; }
+  .massages li::before { content: '·  '; color: #aaa; }
+
+  .empty-state {
+    font-size: 13px; color: #bbb; font-style: italic;
+    padding: 8px 0; border: 1px dashed #ddd; border-radius: 6px;
+    text-align: center;
+  }
+
+  /* INSIGHTS */
+  .insight {
+    background: #eef4ff; border: 1px solid #c5d8f5; border-radius: 10px;
+    padding: 14px 18px; margin-bottom: 10px;
+  }
+  .insight-title { font-size: 13px; font-weight: 600; color: #1a3a6b; margin-bottom: 4px; }
+  .insight-text { font-size: 13px; color: #444; line-height: 1.5; }
+
+  /* YS SECTION */
+  .ys-section { background: #fff8f4; border: 1.5px solid #f0803b; border-radius: 14px; padding: 24px 26px; }
+  .ys-title { font-size: 18px; font-weight: 600; color: #a04000; margin-bottom: 4px; }
+  .ys-subtitle { font-size: 13px; color: #c07040; margin-bottom: 20px; }
+
+  .ys-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+  .ys-block { background: #fff; border: 1px solid #f0c8a0; border-radius: 10px; padding: 14px 16px; }
+  .ys-block-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #c07040; margin-bottom: 10px; }
+  .ys-block ul { list-style: none; }
+  .ys-block ul li { font-size: 13px; padding: 5px 0; border-bottom: 1px solid #fae8d8; color: #2c2c2a; line-height: 1.4; }
+  .ys-block ul li:last-child { border-bottom: none; }
+  .ys-block ul li::before { content: '→  '; color: #f0803b; font-size: 11px; }
+
+  .ys-table-wrap { overflow-x: auto; margin-top: 16px; }
+  table.ys-table {
+    width: 100%; border-collapse: collapse; font-size: 13px;
+    background: #fff; border-radius: 10px; overflow: hidden;
+    border: 1px solid #f0c8a0;
+  }
+  .ys-table th { background: #fde8d8; padding: 10px 14px; font-weight: 600; font-size: 12px; color: #a04000; border-bottom: 1px solid #f0c8a0; text-align: left; }
+  .ys-table td { padding: 10px 14px; border-bottom: 1px solid #fae8d8; color: #2c2c2a; vertical-align: top; }
+  .ys-table tr:last-child td { border-bottom: none; }
+  .ys-table td.placeholder { color: #ccc; font-style: italic; }
+
+  /* SEGMENT CHART */
+  .segment-row { display: flex; align-items: center; gap: 14px; padding: 9px 0; border-bottom: 1px solid #f0ede6; }
+  .segment-row:last-child { border-bottom: none; }
+  .segment-name { font-size: 13px; font-weight: 500; min-width: 120px; }
+  .segment-bar-wrap { flex: 1; background: #f0ede6; border-radius: 4px; height: 6px; }
+  .segment-bar { height: 6px; border-radius: 4px; background: #5C6937; }
+  .segment-price { font-size: 12px; color: #888; min-width: 130px; text-align: right; }
+
+  @media (max-width: 680px) {
+    .review-cols { grid-template-columns: 1fr; }
+    .ys-grid { grid-template-columns: 1fr; }
+    .cards { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Исследование рынка массажа</h1>
+  <div class="subtitle">Yoga Space · июнь 2026 · подготовка к открытию массажного кабинета на Пятницкой</div>
+
+  <nav class="nav">
+    <a href="#overview">Обзор рынка</a>
+    <a href="#prices">Сравнение цен</a>
+    <a href="#reviews">Клиентский опыт</a>
+    <a href="#insights">УТП конкурентов</a>
+    <a href="#clothed">Массаж в одежде</a>
+    <a href="#ys">Массаж в YS</a>
+  </nav>
+
+  <!-- ======= ОБЗОР РЫНКА ======= -->
+  <div class="section" id="overview">
+    <div class="section-label">Обзор рынка</div>
+    <h2>Конкуренты и их позиционирование</h2>
+    <div class="cards">
+      <div class="card">
+        <span class="card-tag tag-sport">Спорт + массаж</span>
+        <div class="card-name">Shape It!</div>
+        <div class="card-utp">«Самая комфортная студия для девушек» — безопасность, профессионализм, атмосфера любви к телу. 3 студии в центре Москвы.</div>
+        <div class="card-price">от <strong>2 900 ₽</strong> / 30 мин · до <strong>9 600 ₽</strong> программа</div>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-luxury">Авангард</span>
+        <div class="card-name">Ляг (Ляг спиной)</div>
+        <div class="card-utp">«Претенциозные, авангардные, крайне трогательные». Нетривиальные интерьеры, дизайнерский подход. Москва и Санкт-Петербург.</div>
+        <div class="card-price">от <strong>4 900 ₽</strong> / первый раз · 3 сеанса <strong>15 000 ₽</strong></div>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-mass">Body-positive</span>
+        <div class="card-name">Any Body</div>
+        <div class="card-utp">«Современные гедонисты». Авторские миксы техник, без клише. DUO-массаж для двоих.</div>
+        <div class="card-price">от <strong>6 300 ₽</strong> / 60 мин · DUO <strong>12 000 ₽</strong></div>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-niche">Комфорт без эзотерики</span>
+        <div class="card-name">Feedback</div>
+        <div class="card-utp">«Максимум комфорта, никакой эзотерики». 5 локаций, единые цены, у метро, certified.</div>
+        <div class="card-price"><strong>3 400 ₽</strong> / 60 мин · <strong>6 800 ₽</strong> / 120 мин</div>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-luxury">Премиум-ритуал</span>
+        <div class="card-name">Koja</div>
+        <div class="card-utp">Марокканская эстетика, непрерывное касание. 100-летний сосновый пол, натуральный лён.</div>
+        <div class="card-price">Сегмент <strong>8 000–12 000 ₽</strong></div>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-yoga">Восток + душа</span>
+        <div class="card-name">Mahash</div>
+        <div class="card-utp">«Гармонизация тела, разума и души». Органика, медитация, авторский Pure Touch. С 2010 г.</div>
+        <div class="card-price">Сегмент <strong>8 000–15 000 ₽</strong></div>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-mass">Масс-маркет</span>
+        <div class="card-name">Вай Тай / Тайрай</div>
+        <div class="card-utp">80+ салонов по России с 2010 г. Тайский массаж: акупрессура + растяжка. Только мастера-женщины.</div>
+        <div class="card-price">Самый доступный сегмент</div>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-sport">Спорт + реаб</span>
+        <div class="card-name">Sculpt</div>
+        <div class="card-utp">Фитнес + массаж для восстановления после тренировок. Медицинская консультация на входе.</div>
+        <div class="card-price">Средний+ сегмент</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 24px; background: #fff; border: 1px solid #e8e4dc; border-radius: 12px; padding: 18px 20px;">
+      <div class="section-label" style="margin-bottom: 10px;">Ценовые сегменты</div>
+      <div class="segment-row"><div class="segment-name">Масс-маркет</div><div class="segment-bar-wrap"><div class="segment-bar" style="width:28%"></div></div><div class="segment-price">до 4 000 ₽ / час</div></div>
+      <div class="segment-row"><div class="segment-name">Средний</div><div class="segment-bar-wrap"><div class="segment-bar" style="width:55%"></div></div><div class="segment-price">4 000–7 000 ₽ / час</div></div>
+      <div class="segment-row"><div class="segment-name">Средний+</div><div class="segment-bar-wrap"><div class="segment-bar" style="width:75%"></div></div><div class="segment-price">7 000–10 000 ₽ / час</div></div>
+      <div class="segment-row"><div class="segment-name">Премиум</div><div class="segment-bar-wrap"><div class="segment-bar" style="width:100%"></div></div><div class="segment-price">от 10 000 ₽ / час</div></div>
+    </div>
+  </div>
+
+  <!-- ======= СРАВНЕНИЕ ЦЕН ======= -->
+  <div class="section" id="prices">
+    <div class="section-label">Сравнение цен</div>
+    <h2>Прайс по студиям и длительности сеанса</h2>
+    <div class="price-wrap">
+      <table class="price-table">
+        <thead>
+          <tr>
+            <th class="studio-col">Студия</th>
+            <th>30 мин</th>
+            <th>45 мин</th>
+            <th>60 мин</th>
+            <th>90 мин</th>
+            <th>120 мин</th>
+            <th>Первый раз</th>
+            <th>Абонемент</th>
+            <th>Акции</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="studio-name">Shape It!<br><span class="price-note"><a href="https://shapeitstudio.ru" style="color:#5C6937">shapeitstudio.ru</a></span></td>
+            <td>2 900 ₽</td>
+            <td>—</td>
+            <td>4 900 ₽</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>скидка 15–20%</td>
+            <td>депозиты 30–50к</td>
+          </tr>
+          <tr>
+            <td class="studio-name">Ляг<br><span class="price-note"><a href="https://lyag.ru" style="color:#5C6937">lyag.ru</a></span></td>
+            <td>—</td>
+            <td>—</td>
+            <td>4 900 ₽</td>
+            <td>—</td>
+            <td>—</td>
+            <td>4 900 ₽</td>
+            <td>3 сеанса — 15 000 ₽</td>
+            <td>ранние пташки</td>
+          </tr>
+          <tr>
+            <td class="studio-name">Any Body<br><span class="price-note"><a href="https://anybody.studio" style="color:#5C6937">anybody.studio</a></span></td>
+            <td>—</td>
+            <td>—</td>
+            <td>6 300 ₽</td>
+            <td>8 300 ₽</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td class="studio-name">Feedback<br><span class="price-note"><a href="https://feedback-massage.ru" style="color:#5C6937" target="_blank">feedback-massage.ru ↗</a></span></td>
+            <td>—</td>
+            <td>—</td>
+            <td>3 400 ₽</td>
+            <td>—</td>
+            <td>6 800 ₽</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td class="studio-name">Koja<br><span class="price-note">koja.ru</span></td>
+            <td>—</td>
+            <td>—</td>
+            <td class="placeholder" style="color:#ccc;font-style:italic">уточнить</td>
+            <td class="placeholder" style="color:#ccc;font-style:italic">уточнить</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td class="studio-name">Mahash<br><span class="price-note">mahash.ru</span></td>
+            <td>—</td>
+            <td>—</td>
+            <td class="placeholder" style="color:#ccc;font-style:italic">уточнить</td>
+            <td class="placeholder" style="color:#ccc;font-style:italic">уточнить</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td class="studio-name">Вай Тай<br><span class="price-note">вайтай.рф</span></td>
+            <td class="placeholder" style="color:#ccc;font-style:italic">уточнить</td>
+            <td>—</td>
+            <td class="placeholder" style="color:#ccc;font-style:italic">уточнить</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr class="price-ys">
+            <td class="studio-name" style="color:#a04000">Yoga Space 🔜<br><span class="price-note" style="color:#c07040">Пятницкая</span></td>
+            <td class="placeholder">—</td>
+            <td class="placeholder">—</td>
+            <td class="placeholder" style="color:#f0803b;font-style:italic">в разработке</td>
+            <td class="placeholder">—</td>
+            <td class="placeholder">—</td>
+            <td class="placeholder">—</td>
+            <td class="placeholder">—</td>
+            <td class="placeholder">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top: 10px; font-size: 12px; color: #aaa;">
+      Ячейки «уточнить» — нужно зайти на сайт и выписать цены вручную. Пустые (—) — формат не предлагается.
+    </div>
+  </div>
+
+  <!-- ======= КЛИЕНТСКИЙ ОПЫТ ======= -->
+  <div class="section" id="reviews">
+    <div class="section-label">Клиентский опыт</div>
+    <h2>Что понравилось и не понравилось</h2>
+    <div class="review-grid">
+
+      <!-- ЛЯГ -->
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-name">Ляг (Ляг спиной)</div>
+          <a href="https://lyag.ru" class="review-link" target="_blank">lyag.ru ↗</a>
+          <span class="card-tag tag-luxury" style="margin-bottom:0; margin-left:auto">Авангард</span>
+        </div>
+        <div class="review-concept">Концепция: запутанная, не поняла — карточки мастеров с маленькими круглыми фото без какого-либо описания; нет визуала расписания с мастером как классы в 1С; не понятны отличия филиалов кроме адреса; в описаниях массажа хочется визуал, зоны воздействия, эффект</div>
+        <div class="review-cols">
+          <div class="review-block">
+            <div class="review-block-label" style="color:#c0392b">Не понравилось</div>
+            <ul class="not-ok">
+              <li>Карточки мастеров без описания</li>
+              <li>Нет визуала расписания с мастером</li>
+              <li>Непонятны отличия филиалов</li>
+              <li>В описаниях нет зон воздействия и эффекта</li>
+            </ul>
+          </div>
+          <div class="review-block">
+            <div class="review-block-label" style="color:#1e6b3c">Понравилось</div>
+            <ul class="ok">
+              <li class="empty-state" style="list-style:none; border:none; padding:6px 0; color:#bbb; font-style:italic">добавить вручную →</li>
+            </ul>
+          </div>
+          <div class="review-block">
+            <div class="review-block-label">Массажи</div>
+            <ul class="massages">
+              <li>Классика</li>
+              <li>Спортивный</li>
+              <li>Антицеллюлитный</li>
+              <li>Релакс</li>
+              <li>Тёмная комната</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHAPE IT -->
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-name">Shape It!</div>
+          <a href="https://shapeitstudio.ru" class="review-link" target="_blank">shapeitstudio.ru ↗</a>
+          <span class="card-tag tag-sport" style="margin-bottom:0; margin-left:auto">Спорт</span>
+        </div>
+        <div class="review-concept">Концепция: для женщин, сразу считывается визуал и текст. Москва.</div>
+        <div class="review-cols">
+          <div class="review-block">
+            <div class="review-block-label" style="color:#c0392b">Не понравилось</div>
+            <ul class="not-ok">
+              <li class="empty-state" style="list-style:none; border:none; padding:6px 0; color:#bbb; font-style:italic">добавить вручную →</li>
+            </ul>
+          </div>
+          <div class="review-block">
+            <div class="review-block-label" style="color:#1e6b3c">Понравилось</div>
+            <ul class="ok">
+              <li>Сразу понятны филиалы</li>
+              <li>Есть кнопка «сделать подарок» и «записаться» на главной</li>
+              <li>4 ключевые ценности в описании хорошо считываются</li>
+              <li>Есть фото студий изнутри — понятно, в каком пространстве окажешься</li>
+              <li>Понятные карточки массажа — цели, эффект, стоимость, длительность</li>
+              <li>Есть фото отзывов</li>
+              <li>Клуб Shape It! — хочется стать его частью)</li>
+              <li>Фото специалистов хорошо читаются, есть описание их опыта и особенностей</li>
+            </ul>
+          </div>
+          <div class="review-block">
+            <div class="review-block-label">Массажи</div>
+            <ul class="massages">
+              <li>Оздоровительный</li>
+              <li>Коррекционный</li>
+              <li>Релакс с аромамаслами</li>
+              <li>Для беременных</li>
+              <li>Массаж лица</li>
+              <li>Антицеллюлитный / медовый</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANY BODY -->
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-name">Any Body</div>
+          <a href="https://anybody.studio" class="review-link" target="_blank">anybody.studio ↗</a>
+          <span class="card-tag tag-mass" style="margin-bottom:0; margin-left:auto">Body-positive</span>
+        </div>
+        <div class="review-concept">Концепция: условно понятна, но картинки не очень приятные. Москва.</div>
+        <div class="review-cols">
+          <div class="review-block">
+            <div class="review-block-label" style="color:#c0392b">Не понравилось</div>
+            <ul class="not-ok">
+              <li>Картинки и визуализация какая-то неприятная</li>
+              <li>Визуальное описание массажей читается плохо, не структурировано</li>
+              <li>Стоимость абонемента со скидкой — цены не ровные, ими сложно оперировать</li>
+            </ul>
+          </div>
+          <div class="review-block">
+            <div class="review-block-label" style="color:#1e6b3c">Понравилось</div>
+            <ul class="ok">
+              <li>Есть фото пространства изнутри</li>
+              <li>Есть общее позиционирование мастеров и массажей</li>
+              <li>Есть описание эффекта и содержания массажа</li>
+              <li>Интересные названия массажей: «глубокий» и «короткий» — описание и цели в одном флаконе</li>
+              <li>Есть парный массаж для двоих</li>
+              <li>Есть доп. процедуры — маски, масла, уход и пр.</li>
+              <li>Пишут, на каком масле делают массаж</li>
+              <li>При продаже абонемента есть расчёт стоимости до и после скидки</li>
+            </ul>
+          </div>
+          <div class="review-block">
+            <div class="review-block-label">Массажи</div>
+            <ul class="massages">
+              <li>Balance (расслабляющий)</li>
+              <li>Firming (моделирующий)</li>
+              <li>DUO (парный)</li>
+              <li>Short (экспресс)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- FEEDBACK -->
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-name">Feedback</div>
+          <a href="https://feedback-massage.ru" class="review-link" target="_blank">feedback-massage.ru ↗</a>
+          <span class="card-tag tag-niche" style="margin-bottom:0; margin-left:auto">Комфорт</span>
+        </div>
+        <div class="review-concept">Концепция: «Мы мнём» — прикольно) Сеть: Москва, Спб, Сочи, Казань и др. Топ-1 по TripAdvisor и Kudagid.</div>
+        <div class="review-cols">
+          <div class="review-block">
+            <div class="review-block-label" style="color:#c0392b">Не понравилось</div>
+            <ul class="not-ok">
+              <li>Сайт тёмноват — больше в стиле ночного клуба, чем массажа</li>
+            </ul>
+          </div>
+          <div class="review-block">
+            <div class="review-block-label" style="color:#1e6b3c">Понравилось</div>
+            <ul class="ok">
+              <li>Есть «записаться впервые» на первой же странице</li>
+              <li>Онлайн-счётчик гостей, филиалов и программ</li>
+              <li>Лозунг — точный, по делу, понятный</li>
+              <li>Одна цена на все — только за длительность. Очень прозрачно</li>
+              <li>Очень человечные фото массажистов — лучшее из того, что видела</li>
+              <li>«Секретный ТГ-канал» со скидками — вовлекающий механизм</li>
+            </ul>
+          </div>
+          <div class="review-block">
+            <div class="review-block-label">Массажи</div>
+            <ul class="massages">
+              <li>«Как положено» (классический)</li>
+              <li>Спортивный</li>
+              <li>Релакс</li>
+              <li>Лимфодренаж</li>
+              <li>Антицеллюлитный</li>
+              <li>Фейс-практика (лицо без инъекций)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Свободный слот -->
+      <div class="review-card" style="border-style: dashed; background: #fafaf8;">
+        <div class="review-header">
+          <div class="review-name" style="color:#aaa">+ добавить студию</div>
+        </div>
+        <div style="color:#ccc; font-size:13px; font-style:italic;">Вставить карточку для новой студии — скажи мне название и я добавлю блок</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======= УТП КОНКУРЕНТОВ ======= -->
+  <div class="section" id="insights">
+    <div class="section-label">Аналитика</div>
+    <h2>Что работает у конкурентов</h2>
+    <div class="insight">
+      <div class="insight-title">Чёткая аудитория важнее широкого охвата</div>
+      <div class="insight-text">Shape It — только для девушек. Any Body — для гедонистов. Feedback — для тех, кто не любит эзотерику. Нейтрального «для всех» на рынке почти нет — и это не случайно.</div>
+    </div>
+    <div class="insight">
+      <div class="insight-title">Атмосфера — это продукт, а не фон</div>
+      <div class="insight-text">Ляг продаёт интерьер и авангардность. Koja — ощущение дорогих материалов. Mahash — философию. У каждой студии есть «ощущение», которое клиент покупает до массажа.</div>
+    </div>
+    <div class="insight">
+      <div class="insight-title">Экосистема удерживает лучше скидок</div>
+      <div class="insight-text">Yoga Practika, Прана, ZEN Space — те, кто добавил массаж не как отдельный бизнес, а как «слой» к практике. Клиент приходит за йогой и остаётся восстанавливаться.</div>
+    </div>
+    <div class="insight">
+      <div class="insight-title">Тайский массаж = натуральная «пассивная йога»</div>
+      <div class="insight-text">Тайский массаж часто называют «йогой без усилий» — акупрессура + растяжка. Это сильнейший нарративный мостик для аудитории йога-студии, особенно к Yin и восстановительным классам.</div>
+    </div>
+    <div class="insight">
+      <div class="insight-title">Рынок растёт: момент хороший</div>
+      <div class="insight-text">По данным Росстата, оборот массажных студий вырос в 3 раза, средний чек перевалил за 6 300 ₽ и продолжает расти. Входить на этот рынок с сильным брендом сейчас — правильно.</div>
+    </div>
+  </div>
+
+  <!-- ======= МАССАЖ В ОДЕЖДЕ И НЕОБЫЧНЫЕ ФОРМАТЫ ======= -->
+  <div class="section" id="clothed">
+    <div class="section-label">Отдельная ниша</div>
+    <h2>Массаж в одежде и необычные форматы</h2>
+    <p style="font-size:13px; color:#555; margin-bottom:24px; line-height:1.6;">
+      Техники, которые делаются <strong>без масла, прямо через одежду</strong> — клиент не раздевается, нет простыней, нет масел. Работа с энергетическими линиями, точками и пассивной растяжкой. Именно этот формат ближе всего к йоге — и нарративно, и физически. Ниже — разбор по двум категориям: <strong>базовые техники</strong> (хорошо известны, есть рынок) и <strong>редкие / необычные</strong> (нишевые, создают уникальность).
+    </p>
+
+    <!-- БАЗОВЫЕ -->
+    <h3 style="margin-bottom:12px; color:#5C6937; font-size:13px; text-transform:uppercase; letter-spacing:0.06em;">Базовые техники в одежде</h3>
+    <div class="cards" style="margin-bottom:28px;">
+      <div class="card" style="border-color:#c0d8a8;">
+        <span class="card-tag tag-yoga">Таиланд · северный стиль</span>
+        <div class="card-name">Тайский йога-массаж (TYM)</div>
+        <div class="card-utp">Важно: есть <strong>два стиля</strong>. Южный (Бангкок) — акупрессура и точки. Северный (Чианг Май) — упор именно на пассивные йога-позы и растяжку. Мастер буквально «ведёт тело через асаны». Это и есть «пассивная йога» — логичнее всего для YS. На полу, в одежде, 60–120 мин. Мастера с сертификатом Чианг Мая есть в Москве.</div>
+        <div class="card-price">от <strong>3 000 ₽</strong> / 60 мин · от <strong>5 500 ₽</strong> / 90 мин</div>
+      </div>
+      <div class="card" style="border-color:#c0d8a8;">
+        <span class="card-tag tag-yoga">Япония</span>
+        <div class="card-name">Шиацу</div>
+        <div class="card-utp">Точечное давление пальцами по энергетическим меридианам. Работа через одежду, без масел. Снимает спазмы, улучшает сон, убирает хроническое напряжение. В Москве — нишевая техника, мастеров мало.</div>
+        <div class="card-price"><strong>3 500–6 000 ₽</strong> — мало студий, в основном частные</div>
+      </div>
+      <div class="card" style="border-color:#c0d8a8;">
+        <span class="card-tag tag-yoga">Индия · аюрведа</span>
+        <div class="card-name">Марма-массаж</div>
+        <div class="card-utp">Воздействие на 107 жизненно важных точек тела из аюрведической традиции. Из той же системы, что и йога — это сильный нарратив: «аюрведа + йога + массаж». В Москве почти только в аюрведических центрах — для йога-студии это было бы уникальным.</div>
+        <div class="card-price">Нишевая, частные мастера</div>
+      </div>
+    </div>
+
+    <!-- НЕОБЫЧНЫЕ -->
+    <h3 style="margin-bottom:12px; color:#a04000; font-size:13px; text-transform:uppercase; letter-spacing:0.06em;">Необычные и редкие форматы</h3>
+    <div class="cards" style="margin-bottom:28px;">
+      <div class="card" style="border-color:#f0c8a0;">
+        <span class="card-tag tag-ys">Мексика · изюминка</span>
+        <div class="card-name">Ребозо</div>
+        <div class="card-utp">Работа через мексиканское тканевое полотно: покачивания, обматывания, лёгкая тракция. Пришёл из акушерства, сейчас используется в восстановительных практиках. Создаёт ощущение безопасности и «укутанности» — идеально к Yin и Yoga Nidra по атмосфере. В Москве мастеров единицы, уникальность очень высокая.</div>
+        <div class="card-price">Частные мастера · редкость на рынке</div>
+      </div>
+      <div class="card" style="border-color:#f0c8a0;">
+        <span class="card-tag tag-ys">Тайланд · необычно</span>
+        <div class="card-name">Токсен</div>
+        <div class="card-utp">Северотайская техника: мастер работает деревянным молоточком и клином по мышцам и сухожилиям. В одежде. Создаёт вибрацию, уходящую вглубь тканей — эффект глубже, чем от рук, при лёгком воздействии. Очень необычный сенсорный опыт.</div>
+        <div class="card-price">Редкость в Москве · нишевый формат</div>
+      </div>
+      <div class="card" style="border-color:#f0c8a0;">
+        <span class="card-tag tag-ys">Тибет · звук</span>
+        <div class="card-name">Массаж тибетскими чашами</div>
+        <div class="card-utp">Поющие чаши ставятся на тело и звучат — вибрация проходит через ткани и органы. Делается в одежде, ощущение медитации через тело. Очень атмосферно, легко вписывается в нарратив студии. Аппаратных расходов почти нет — только чаши.</div>
+        <div class="card-price"><strong>4 000–8 000 ₽</strong> · мастера в Москве есть</div>
+      </div>
+      <div class="card" style="border-color:#f0c8a0;">
+        <span class="card-tag tag-ys">Япония · лицо</span>
+        <div class="card-name">Кобидо</div>
+        <div class="card-utp">Японский ритуальный массаж лица — без игл и скребков, только руки. Работа с меридианами, мышцами и костными структурами лица. Визуальный результат заметен сразу. На рынке сейчас горячая ниша: лифтинг без инъекций в тренде. Через одежду — только шея и плечи.</div>
+        <div class="card-price"><strong>5 000–12 000 ₽</strong> · растущий тренд</div>
+      </div>
+    </div>
+
+    <!-- СРАВНИТЕЛЬНАЯ ТАБЛИЦА -->
+    <div style="background: #fff; border: 1px solid #e8e4dc; border-radius: 12px; padding: 18px 20px;">
+      <div class="section-label" style="margin-bottom: 12px;">Сравнение всех техник для YS</div>
+      <div class="price-wrap">
+        <table class="price-table">
+          <thead>
+            <tr>
+              <th class="studio-col">Техника</th>
+              <th>В одежде?</th>
+              <th>Что делает мастер</th>
+              <th>Эффект</th>
+              <th>Связь с йогой</th>
+              <th>Доступность мастеров</th>
+              <th>Уникальность для YS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="studio-name">Тайский йога-массаж<br><span class="price-note">северный стиль (TYM)</span></td>
+              <td style="color:#1e6b3c; font-weight:500">Да</td>
+              <td>Пассивные йога-позы + акупрессура</td>
+              <td>Гибкость, энергия, восстановление</td>
+              <td style="color:#5C6937; font-weight:600">Максимальная</td>
+              <td style="color:#1e6b3c">Есть в Москве</td>
+              <td>Средняя — рынок есть, но не в йога-студиях</td>
+            </tr>
+            <tr>
+              <td class="studio-name">Шиацу</td>
+              <td style="color:#1e6b3c; font-weight:500">Да</td>
+              <td>Точечное давление по меридианам</td>
+              <td>Нервная система, сон, спазмы</td>
+              <td>Высокая — те же меридианы</td>
+              <td style="color:#c0392b">Мало мастеров</td>
+              <td>Высокая</td>
+            </tr>
+            <tr>
+              <td class="studio-name">Марма</td>
+              <td style="color:#1e6b3c; font-weight:500">Да</td>
+              <td>107 аюрведических точек</td>
+              <td>Баланс систем тела</td>
+              <td style="color:#5C6937; font-weight:600">Максимальная</td>
+              <td style="color:#c0392b">Единицы</td>
+              <td>Очень высокая</td>
+            </tr>
+            <tr>
+              <td class="studio-name">Ребозо</td>
+              <td style="color:#1e6b3c; font-weight:500">Да</td>
+              <td>Покачивания через ткань</td>
+              <td>Глубокое расслабление, ЦНС</td>
+              <td>Высокая — к Yin / Yoga Nidra</td>
+              <td style="color:#c0392b">Единицы</td>
+              <td>Очень высокая</td>
+            </tr>
+            <tr>
+              <td class="studio-name">Токсен</td>
+              <td style="color:#1e6b3c; font-weight:500">Да</td>
+              <td>Деревянный молоточек по мышцам</td>
+              <td>Глубокое снятие напряжения</td>
+              <td>Средняя</td>
+              <td style="color:#c0392b">Редкость</td>
+              <td>Очень высокая</td>
+            </tr>
+            <tr>
+              <td class="studio-name">Тибетские чаши</td>
+              <td style="color:#1e6b3c; font-weight:500">Да</td>
+              <td>Звуковая вибрация на теле</td>
+              <td>Медитация через звук, расслабление</td>
+              <td>Высокая — медитативный контекст</td>
+              <td style="color:#5C6937">Есть в Москве</td>
+              <td>Высокая</td>
+            </tr>
+            <tr>
+              <td class="studio-name">Кобидо</td>
+              <td>Частично</td>
+              <td>Ритуальный массаж лица руками</td>
+              <td>Лифтинг, тонус, визуальный результат</td>
+              <td>Низкая — отдельная услуга</td>
+              <td style="color:#5C6937">Тренд — мастера есть</td>
+              <td>Высокая как add-on</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;">
+      <div class="insight">
+        <div class="insight-title">Стратегия для YS: старт + изюминка</div>
+        <div class="insight-text"><strong>Стартовать</strong> с тайского йога-массажа (северный стиль) — самое понятное для клиента, сильный нарратив «пассивная йога», найти мастера реальнее всего. <strong>Добавить изюминку</strong> — ребозо или тибетские чаши: это сразу создаёт отличие от обычных тайских сетей и работает на нарратив «осознанного восстановления».</div>
+      </div>
+      <div class="insight">
+        <div class="insight-title">Барьер «раздеваться» исчезает</div>
+        <div class="insight-text">Для новых клиентов студии массаж в одежде — гораздо более низкий порог входа. Не нужно раздеваться перед незнакомым человеком, не нужна кушетка со сложной сантехникой. Коврик, подушки — и всё готово. Это важно для первых шагов в массажном кабинете.</div>
+      </div>
+      <div class="insight">
+        <div class="insight-title">Кто в Москве это делает</div>
+        <div class="insight-text"><strong>Тайский:</strong> Вай Тай / Тайрай (масс-маркет), Crown Thai, Tao Thai, Саттва-центр (с сертификатом Чианг Мая). <strong>Тибетские чаши:</strong> встречаются в аюрведических центрах и частных практиках. <strong>Ребозо, токсен, марма:</strong> в основном частные мастера — отдельных студий в Москве нет.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= YOGA SPACE ======= -->
+  <div class="section" id="ys">
+    <div class="section-label">Наш массажный кабинет</div>
+    <div class="ys-section">
+      <div class="ys-title">Массаж в Yoga Space — Пятницкая</div>
+      <div class="ys-subtitle">Раздел в разработке — заполняем вместе</div>
+
+      <div class="ys-grid">
+        <div class="ys-block">
+          <div class="ys-block-title">Концепция и УТП</div>
+          <ul>
+            <li>Массаж как продолжение практики — тело уже разогрето</li>
+            <li>Осознанное восстановление, а не просто расслабление</li>
+            <li>Только для практикующих в студии (или открытый?)</li>
+            <li style="color:#ccc; font-style:italic; list-style:none;">→ добавить свои идеи</li>
+          </ul>
+        </div>
+        <div class="ys-block">
+          <div class="ys-block-title">Какие массажи хотим предложить</div>
+          <ul>
+            <li>Тайский (пассивная йога — отличный нарратив)</li>
+            <li>Восстановительный / спортивный</li>
+            <li>Расслабляющий / релакс</li>
+            <li style="color:#ccc; font-style:italic; list-style:none;">→ добавить свои идеи</li>
+          </ul>
+        </div>
+        <div class="ys-block">
+          <div class="ys-block-title">Формат работы</div>
+          <ul>
+            <li style="color:#ccc; font-style:italic; list-style:none;">→ свой мастер или аренда кабинета?</li>
+            <li style="color:#ccc; font-style:italic; list-style:none;">→ один мастер или несколько?</li>
+            <li style="color:#ccc; font-style:italic; list-style:none;">→ расписание привязано к залу?</li>
+          </ul>
+        </div>
+        <div class="ys-block">
+          <div class="ys-block-title">Целевая аудитория</div>
+          <ul>
+            <li>Студенты студии — после класса</li>
+            <li>Практикующие yin / восстановительные классы</li>
+            <li style="color:#ccc; font-style:italic; list-style:none;">→ внешние клиенты?</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ys-table-wrap">
+        <table class="ys-table">
+          <thead>
+            <tr>
+              <th>Тип массажа</th>
+              <th>Длительность</th>
+              <th>Планируемая цена</th>
+              <th>Для кого</th>
+              <th>Связь с классами YS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Тайский</td>
+              <td class="placeholder">?</td>
+              <td class="placeholder">в разработке</td>
+              <td>Практикующие Yin, хатха</td>
+              <td>«Пассивная йога»</td>
+            </tr>
+            <tr>
+              <td>Восстановительный</td>
+              <td class="placeholder">?</td>
+              <td class="placeholder">в разработке</td>
+              <td>После динамичных классов</td>
+              <td>Виньяса, аштанга</td>
+            </tr>
+            <tr>
+              <td class="placeholder">добавить →</td>
+              <td class="placeholder">—</td>
+              <td class="placeholder">—</td>
+              <td class="placeholder">—</td>
+              <td class="placeholder">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
